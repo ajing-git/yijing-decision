@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天意决策 - 易经占卜助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>天意决策</h1>
+            <p class="subtitle">把犹豫交给天意</p>
+        </header>
+
+        <main>
+            <!-- 输入区域 -->
+            <section id="input-section">
+                <div class="question-input">
+                    <label for="question">你的问题（可选，可心里默念）：</label>
+                    <textarea id="question" rows="3" placeholder="例如：要不要换工作？要不要去约会？"></textarea>
+                </div>
+                <button id="start-btn" class="primary-btn">开始起卦</button>
+            </section>
+
+            <!-- 投掷区域 -->
+            <section id="throw-section" class="hidden">
+                <h2>正在投掷...</h2>
+                <p class="progress">第 <span id="current-throw">1</span> / 6 次</p>
+                <div id="coin-container">
+                    <div class="coin"></div>
+                    <div class="coin"></div>
+                    <div class="coin"></div>
+                </div>
+                <button id="throw-btn" class="primary-btn">投掷铜钱</button>
+            </section>
+
+            <!-- 结果区域 -->
+            <section id="result-section" class="hidden">
+                <div class="gua-symbol">
+                    <h2 id="gua-name">卦名</h2>
+                    <div id="gua-lines" class="gua-lines"></div>
+                </div>
+                <div class="gua-info">
+                    <div class="gua-gua-ci">
+                        <h3>卦辞</h3>
+                        <p id="gua-ci-text"></p>
+                    </div>
+                    <div class="gua-interpretation">
+                        <h3>白话解读</h3>
+                        <p id="interpretation-text"></p>
+                    </div>
+                    <div class="gua-advice">
+                        <h3>参考意见</h3>
+                        <p id="advice-text"></p>
+                    </div>
+                    <div class="disclaimer">
+                        <p>⚠️ 意见仅供参考，请理性决策</p>
+                    </div>
+                </div>
+                <button id="restart-btn" class="primary-btn">再占一卦</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>基于《易经》六十四卦体系 | 仅供娱乐参考</p>
+        </footer>
+    </div>
+
+    <script src="js/yijing.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
