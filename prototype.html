@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天意决策 - 原型预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .prototype-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .prototype-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .prototype-nav button {
+            padding: 10px 20px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            transition: transform 0.2s;
+        }
+
+        .prototype-nav button:hover {
+            transform: translateY(-2px);
+        }
+
+        .prototype-nav button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .screen {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .question-input {
+            margin-bottom: 20px;
+        }
+
+        .question-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .question-input textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #throw-section {
+            text-align: center;
+        }
+
+        #throw-section h2 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .progress {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        #coin-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            min-height: 100px;
+        }
+
+        .coin {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #8b4513;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gua-symbol {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .gua-symbol h2 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .gua-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .gua-line {
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .gua-line .yang {
+            width: 60px;
+            height: 100%;
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .gua-line .yin {
+            width: 26px;
+            height: 100%;
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .gua-info > div {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gua-info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .gua-info p {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .disclaimer {
+            background: #fff3cd !important;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+        }
+
+        .disclaimer p {
+            color: #856404 !important;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .prototype-label {
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="prototype-container">
+        <div class="prototype-label">🎨 原型预览 - 点击下方按钮切换页面</div>
+
+        <div class="prototype-nav">
+            <button onclick="showScreen(1)" class="active" id="btn-1">页面1：输入</button>
+            <button onclick="showScreen(2)" id="btn-2">页面2：投掷</button>
+            <button onclick="showScreen(3)" id="btn-3">页面3：结果</button>
+        </div>
+
+        <!-- 页面1：输入页面 -->
+        <div class="screen active" id="screen-1">
+            <header>
+                <h1>天意决策</h1>
+                <p class="subtitle">把犹豫交给天意</p>
+            </header>
+
+            <main>
+                <section class="question-input">
+                    <label for="question">你的问题（可选，可心里默念）：</label>
+                    <textarea id="question" rows="3" placeholder="例如：要不要换工作？要不要去约会？"></textarea>
+                </section>
+                <button class="primary-btn">开始起卦</button>
+            </main>
+
+            <footer>
+                <p>基于《易经》六十四卦体系 | 仅供娱乐参考</p>
+            </footer>
+        </div>
+
+        <!-- 页面2：投掷页面 -->
+        <div class="screen" id="screen-2">
+            <header>
+                <h1>天意决策</h1>
+                <p class="subtitle">把犹豫交给天意</p>
+            </header>
+
+            <main id="throw-section">
+                <h2>正在投掷...</h2>
+                <p class="progress">第 <span id="current-throw">3</span> / 6 次</p>
+                <div id="coin-container">
+                    <div class="coin">字</div>
+                    <div class="coin">花</div>
+                    <div class="coin">字</div>
+                </div>
+                <button class="primary-btn">投掷铜钱</button>
+            </main>
+
+            <footer>
+                <p>基于《易经》六十四卦体系 | 仅供娱乐参考</p>
+            </footer>
+        </div>
+
+        <!-- 页面3：结果页面 -->
+        <div class="screen" id="screen-3">
+            <header>
+                <h1>天意决策</h1>
+                <p class="subtitle">把犹豫交给天意</p>
+            </header>
+
+            <main>
+                <div class="gua-symbol">
+                    <h2>泰卦</h2>
+                    <div class="gua-lines">
+                        <div class="gua-line"><div class="yin"></div><div class="yin"></div></div>
+                        <div class="gua-line"><div class="yang"></div></div></div>
+                        <div class="gua-line"><div class="yin"></div><div class="yin"></div></div>
+                        <div class="gua-line"><div class="yang"></div></div></div>
+                        <div class="gua-line"><div class="yin"></div><div class="yin"></div></div>
+                        <div class="gua-line"><div class="yang"></div></div></div>
+                    </div>
+                </div>
+                <div class="gua-info">
+                    <div class="gua-gua-ci">
+                        <h3>卦辞</h3>
+                        <p>小往大来，吉亨</p>
+                    </div>
+                    <div class="gua-interpretation">
+                        <h3>白话解读</h3>
+                        <p>天地交，泰。当前天地相通、阴阳调和，是最为有利的局面，诸事皆宜。</p>
+                    </div>
+                    <div class="gua-advice">
+                        <h3>参考意见</h3>
+                        <p>现在是行动的最佳时机！积极进取、大胆决策，条件已经成熟，成功的概率很高。</p>
+                    </div>
+                    <div class="disclaimer">
+                        <p>⚠️ 意见仅供参考，请理性决策</p>
+                    </div>
+                </div>
+                <button class="primary-btn">再占一卦</button>
+            </main>
+
+            <footer>
+                <p>基于《易经》六十四卦体系 | 仅供娱乐参考</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(num) {
+            // 隐藏所有屏幕
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // 取消所有按钮激活状态
+            document.querySelectorAll('.prototype-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 显示选中的屏幕
+            document.getElementById('screen-' + num).classList.add('active');
+            document.getElementById('btn-' + num).classList.add('active');
+        }
+    </script>
+</body>
+</html>
